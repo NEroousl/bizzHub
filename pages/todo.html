@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>BizzTo-do</title>
+      <link rel="stylesheet" href="../Assets/css/todo.css">
+      <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <!-- google fonts -->
+      <link href="https://fonts.googleapis.com/css2?family=Koulen&display=swap" rel="stylesheet">
+      <!-- get vuejs cdn -->
+      <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+      <script defer src="../Assets/script/todo.js"></script>
+      <!-- add icon link -->
+      <link rel = "icon" href ="/Assets/img/icon_main.jpg" type = "image/x-icon">
+   </head>
+
+
+
+   <body>
+
+      <div>
+         <button class="btn1" onclick="window.location.href='../index.html';">home</button>
+      </div>
+
+              
+      <main id="todolist">
+         <h1>
+            To-do List
+            <span>Get things done, one item at a time.</span>
+         </h1>
+
+         <img src="../Assets/img/icon_main.jpg" alt="icon">
+
+         <template v-if="todo.length">
+            <transition-group name="todolist" tag="ul">
+               <li v-for="item in todoByStatus" v-bind:class="item.done ? 'done' : ''" v-bind:key="item.id">
+                  <span class="label">{{item.label}}</span>
+                  <div class="actions">
+                     <button class="btn-picto" type="button" v-on:click="markAsDoneOrUndone(item)" v-bind:aria-label="item.done ? 'Undone' : 'Done'" v-bind:title="item.done ? 'Undone' : 'Done'">
+                     <i aria-hidden="true" class="material-icons">{{ item.done ? 'check_box' : 'check_box_outline_blank' }}</i>
+                     </button>
+                     <button class="btn-picto" type="button" v-on:click="deleteItemFromList(item)" aria-label="Delete" title="Delete">
+                     <i aria-hidden="true" class="material-icons">delete</i>
+                     </button>
+                  </div>
+               </li>
+            </transition-group>
+            <togglebutton 
+               label="Move done items at the end?"
+               name="todosort"
+               v-on:clicked="clickontoogle" />
+         </template>
+         <p v-else class="emptylist">Your todo list is empty.</p>
+         <form name="newform" v-on:submit.prevent="addItem">
+            <label for="newitem">Add to the todo list</label>
+            <input type="text" name="newitem" id="newitem" v-model="newitem">
+            <button type="submit">Add item</button>
+         </form>
+      </main>
+<footer>
+   <p id="footerP"><span id="spanFooter">EEI3346 - MINI PROJECT #1</span> | S92083180 </p>
+</footer>
+   </body>
+</html>
